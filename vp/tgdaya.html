@@ -44,7 +44,7 @@ function splitwords(mystr){
 	for(var i=0;i<wlist.length;i++){
 		var tagged = wlist[i];
 		for(var j=0;j<voc.length;j++){
-			if(wlist[i]==voc[j].sed){tagged = '<span class="lv'+voc[j].lv+'">'+tagged+'</span>';break;}
+			if(wlist[i]==voc[j].lex){tagged = '<span class="lv'+voc[j].lv+'">'+tagged+'</span>';break;}
 		}
 		result += tagged;
 	}
