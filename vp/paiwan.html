@@ -9,7 +9,7 @@
 <body>
 	<h1>族語詞彙分級標記 - 中排灣語 (beta)</h1>
 	<p>說明：<span class="lv1">初級</span>、<span class="lv2">中級</span>、<span class="lv3">中高級</span>、<span class="lv4">高級</span></p>
-	<p>範例：<span onclick="samp();">兩隻老虎</span></p>
+	<p>範例：<span class="sample" onclick="samp();">兩隻老虎</span></p>
 	<p><textarea id="input"></textarea></p>
 	<p><button onclick="conv();">標記</button></p>
 	<p><div id="output" ></div></p>
@@ -17,15 +17,15 @@
 
 <script>
 function conv(){
-	var input = document.getElementById("input").value;
+	var input = document.getElementById("input");
 	var output = document.getElementById("output");
-	var result = splitwords(input);
+	var result = splitwords(input.value);
 	output.innerHTML = result;
 }
 function samp(){
-	var input = document.getElementById("input").value;
+	var input = document.getElementById("input");
 	var samptxt = "izua cu a senai na kakedrian a kinicaquan a kemasi gaikuku, pizua tu makaya situlu ta kakedrian inumalj sa tjauvaliti ta tjiniukukuan a kai, “drusa a ljikuljav” aya. na maitucu a parutavak: drusa likuljav, drusa likuljav, djaljav a mekelj! djaljav a mekelj! a ita neka nu calinga, a ita neka nu iku, na semamalji! na semamalji!";
-	input = samptxt;
+	input.value = samptxt;
 }
 function splitwords(mystr){
 	//分詞並產出 wlist
@@ -52,10 +52,11 @@ function splitwords(mystr){
 </script>
 
 <style>
-#input{height:200px;width:500px;}
-#output{height:200px;width:500px;}
-.lv1{background-color: green;}
-.lv2{background-color: yellow;}
-.lv3{background-color: orange;}
-.lv4{background-color: red;}
+	#input{height:200px; width:500px;}
+	#output{height:200px; width:500px;}
+	.sample{color:blue; text-decoration:underline;}
+	.lv1{background-color: green;}
+	.lv2{background-color: yellow;}
+	.lv3{background-color: orange;}
+	.lv4{background-color: red;}
 </style>
