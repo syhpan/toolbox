@@ -9,6 +9,7 @@
 <body>
 	<h1>族語詞彙分級標記 - 中排灣語 (beta)</h1>
 	<p>說明：<span class="lv1">初級</span>、<span class="lv2">中級</span>、<span class="lv3">中高級</span>、<span class="lv4">高級</span></p>
+	<p>範例：<span onclick="samp();">兩隻老虎</span></p>
 	<p><textarea id="input"></textarea></p>
 	<p><button onclick="conv();">標記</button></p>
 	<p><div id="output" ></div></p>
@@ -21,7 +22,11 @@ function conv(){
 	var result = splitwords(input);
 	output.innerHTML = result;
 }
-
+function conv(){
+	var input = document.getElementById("input").value;
+	var samp = "izua cu a senai na kakedrian a kinicaquan a kemasi gaikuku, pizua tu makaya situlu ta kakedrian inumalj sa tjauvaliti ta tjiniukukuan a kai, “drusa a ljikuljav” aya. na maitucu a parutavak: drusa likuljav, drusa likuljav, djaljav a mekelj! djaljav a mekelj! a ita neka nu calinga, a ita neka nu iku, na semamalji! na semamalji!";
+	input = samp;
+}
 function splitwords(mystr){
 	//分詞並產出 wlist
 	var wlist = [];
