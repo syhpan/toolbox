@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-tw">
+<head>
+	<meta charset="utf-8">
+	<title>族語詞彙分級標記 - 中排灣語 (beta)</title>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+	<script src='cp.js'></script>
+</head>
+<body>
+	<h1>族語詞彙分級標記 - 中排灣語 (beta)</h1>
+	<p>說明：<span class="lv1">初級</span>、<span class="lv2">中級</span>、<span class="lv3">中高級</span>、<span class="lv4">高級</span></p>
+	<p><textarea id="input"></textarea></p>
+	<p><button onclick="conv();">標記</button></p>
+	<p><div id="output" ></div></p>
+</body>
+
+<script>
+function conv(){
+	var input = document.getElementById("input").value;
+	var output = document.getElementById("output");
+	var result = splitwords(input);
+	output.innerHTML = result;
+}
+
+function splitwords(mystr){
+	//分詞並產出 wlist
+	var wlist = [];
+	var myword = '';
+	for(var i=0;i<mystr.length;i++){
+		if(mystr[i].match(/^[a-z0-9]+$/i))
+			{myword+=mystr[i];}
+		else
+			{wlist.push(myword); wlist.push(mystr[i]); myword='';}
+	}
+	wlist.push(myword);
+	//查詞並產出 result
+	var result = '';
+	for(var i=0;i<wlist.length;i++){
+		var tagged = wlist[i];
+		for(var j=0;j<voc.length;j++){
+			if(wlist[i]==voc[j].pai){tagged = '<span class="lv'+cp[j].lv+'">'+tagged+'</span>';break;}
+		}
+		result += tagged;
+	}
+	return result;
+}
+</script>
+
+<style>
+#input{height:200px;width:500px;}
+.lv1{background-color: green;}
+.lv2{background-color: yellow;}
+.lv3{background-color: orange;}
+.lv4{background-color: red;}
+</style>
