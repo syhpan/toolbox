@@ -1,0 +1,59 @@
+body {
+  background-color: gold;
+  padding: 20px;
+}
+
+div#page {
+  background-color: white;
+  border-radius: 25px;
+  margin: 0 auto;
+  padding: 5px;
+  text-align: left;
+  min-height: 550px;
+  min-width: 350px;
+  position: relative;
+  display: table;
+}
+
+div {
+  text-align: center;
+}
+
+div#header {
+  margin: 10px 0;
+  width: 100%;
+}
+
+div#menu {
+  background-color: darkgray;
+  color: white;
+  width: 250px;
+  float: left;
+  margin: 10px 0 10px 50px;
+  height: 400px;
+}
+
+div#content {
+  float: left;
+  margin: 10px 25px;
+}
+
+div#footer {
+  margin: 10px;
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+}
+
+input {
+  width: 50px;
+}
+
+textarea {
+  height: 50px;
+  margin: 5px;
+}
+
+#copyright {
+  margin-top: 15px;
+}

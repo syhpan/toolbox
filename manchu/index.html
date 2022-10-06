@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+  <head>
+    <title>Manchu Spelling Quiz</title>
+    <link href="./css/style.css" rel="stylesheet">
+    <style>
+      #output {
+        text-align: left;
+        margin: 0 auto;
+        font-size: 96pt;
+        text-orientation: mixed;
+        writing-mode: vertical-lr;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <!-- Header -->
+      <div id="header">
+        <h1>Manchu Spelling Quiz</h1>
+      </div>
+      <div class="container">
+        <!-- Menu -->
+        <div id="menu">
+          <p>音節數</p>
+          <p>Min: <input id="min" value="3"></input> Max: <input id="max" value="5"></input>
+          </p>
+          <p>音節組合</p> Special char: <button onclick="add('ū');">ū</button>
+          <button onclick="add('š');">š</button>
+          <br>
+          <textarea oninput="rep();" id="input">man ju gi sun</textarea>
+          <br>
+          <p>題數： <input id="qnum" value="5"></input>
+          </p>
+          </p>
+          <select id="select" oninput="sample();">
+            <option value="0">選擇例題</option>
+            <option value="1">例題1</option>
+            <option value="2">例題2</option>
+          </select>
+          </p>
+          <button style="font-size: 14pt;" onclick="quiz();">出題</button>
+          <br>
+        </div>
+        <!-- Content -->
+        <div id="content">
+          <div id="output"></div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div id="footer">國立清華大學歷史所．滿文文獻選讀</div>
+    </div>
+    <!-- Copyright -->
+    <div id="copyright">
+      <div class="container">© 2022 Program designed by <a href="https://syhpan.github.io">Samuel Yu-hsiang Pan</a>
+        <br>Source code: <a href="https://github.com/syhpan/toolbox/manchu/">GitHub</a>
+      </div>
+    </div>
+    <!-- Java script -->
+    <script>
+    /* input for special characters */
+      function rep() {
+        var input = document.getElementById("input");
+        input.value = input.value.replace("x", "š");
+        input.value = input.value.replace("v", "ū");
+      }
+
+      function add(i) {
+        var input = document.getElementById("input");
+        input.value += i;
+      }
+
+    /* select sample quizzes */
+      function sample() {
+        var select = document.getElementById("select");
+        var n = select.value;
+        var input = document.getElementById("input");
+        if (n == 1) {
+          input.value = "a e i o u ū na ne ni no nu nū";
+        }
+        if (n == 2) {
+          input.value = "na ne ni no nu nū sa se si so su sū ša še ši šo šu šū ba be bi bo bu bū pa pe pi po pu pū ma me mi mo mu mū la le li lo lu lū";
+        }
+      }
+
+      /* main function of quiz */
+      function quiz() {
+        /* read input data */
+        var input = document.getElementById("input");
+        mystr = input.value;
+        slist = mystr.split(' ');
+        var min = parseInt(document.getElementById("min").value);
+        var max = parseInt(document.getElementById("max").value);
+        var qnum = parseInt(document.getElementById("qnum").value);
+
+        /* generate quiz list in transliteration with qgen() */
+        var qlist = qgen(slist, min, max, qnum);
+
+        /* generate result list in Manchu with trans() */
+        var rlist = [];
+        for (var i = 0; i < qlist.length; i++) {
+          rlist.push(trans(qlist[i]));
+        }
+        /* send result to output */
+        var result = rlist.toString().replaceAll(',', '<br>');
+          var output = document.getElementById("output"); output.innerHTML = result;
+        }
+
+        /* generate quiz by input preferences*/
+        function qgen(l, a, b, n) {
+          /* setting font size*/
+          var output = document.getElementById("output");
+          output.style.fontSize = "72pt";
+          if (n > 8) {
+            output.style.fontSize = "60pt";
+          }
+          if (n > 10) {
+            output.style.fontSize = "48pt";
+          }
+          if (n > 12) {
+            output.style.fontSize = "36pt";
+          }
+          if (n > 15) {
+            output.style.fontSize = "30pt";
+          }
+          if (n > 20) {
+            output.style.fontSize = "24pt";
+          }
+          if (n > 25) {
+            output.style.fontSize = "18pt";
+          }
+
+          /* get random syllables, concatenate, then push to result list*/
+          var r = [];
+          for (var i = 0; i < n; i++) {
+            var m = Math.floor(Math.random() * (b - a + 1) + a);
+            var q = '';
+            for (var j = 0; j < m; j++) {
+              q += l[Math.floor(Math.random() * l.length)];
+            }
+            r.push(q);
+          }
+          return r;
+        }
+
+        function trans(s) {
+          /* Manchu transliteration & alphabet */
+          var t = {
+            "a": "ᠠ",
+            "e": "ᡝ",
+            "i": "ᡳ",
+            "o": "ᠣ",
+            "u": "ᡠ",
+            "ū": "ᡡ",
+            "b": "ᠪ",
+            "c": "ᠴ",
+            "d": "ᡩ",
+            "f": "ᡶ",
+            "g": "ᡤ",
+            "h": "ᡥ",
+            "j": "ᠵ",
+            "k": "ᡴ",
+            "l": "ᠯ",
+            "m": "ᠮ",
+            "n": "ᠨ",
+            "p": "ᡦ",
+            "r": "ᡵ",
+            "s": "ᠰ",
+            "š": "ᡧ",
+            "t": "ᡨ",
+            "w": "ᠸ",
+            "y": "ᠶ"
+          };
+
+          /*return result in Manchu*/
+          var r = '';
+          for (var i = 0; i < s.length; i++) {
+            r += t[s[i]];
+          }
+          return r;
+        }
+    </script>
+  </body>
+</html>
