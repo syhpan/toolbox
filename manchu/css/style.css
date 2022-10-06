@@ -39,7 +39,7 @@ div#content {
 }
 
 div#footer {
-  margin: 10px;
+  margin: 10px auto;
   position: absolute;
   bottom: 5px;
   width: 100%;
