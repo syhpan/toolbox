@@ -62,12 +62,16 @@ textarea {
   max-width:300px;
   text-align: left;
   display: contents;
-  margin:10px;
+  margin: 10px;
 }
 
 @media screen and (max-width: 600px){
-  #output .group {
+  div#page {
+    max-width:348px;
+  }
+  
+  #output .group{
     display: block;
-    float: left;
+	float: left;
   }
 }
