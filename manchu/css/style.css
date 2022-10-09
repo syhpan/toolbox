@@ -67,11 +67,11 @@ textarea {
 
 @media screen and (max-width: 600px){
   div#page {
-    max-width:348px;
+    max-width: 348px;
   }
-  
+
   #output .group{
     display: block;
-	float: left;
+    float: left;
   }
 }
