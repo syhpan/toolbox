@@ -2,14 +2,18 @@
 <html lang="zh-tw">
   <head>
     <title>Manchu Spelling Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./css/style.css" rel="stylesheet">
     <style>
+      /*default style for Manchu script*/
       #output {
         text-align: left;
         margin: 0 auto;
-        font-size: 96pt;
         text-orientation: mixed;
         writing-mode: vertical-lr;
+      }
+      #quiz {
+        font-size: 14pt;
       }
     </style>
   </head>
@@ -39,7 +43,7 @@
             <option value="2">例題2</option>
           </select>
           </p>
-          <button style="font-size: 14pt;" onclick="quiz();">出題</button>
+          <button id="quiz" onclick="quiz();">出題</button>
           <br>
         </div>
         <!-- Content -->
@@ -53,12 +57,12 @@
     <!-- Copyright -->
     <div id="copyright">
       <div class="container">© 2022 Program designed by <a href="https://syhpan.github.io">Samuel Yu-hsiang Pan</a>
-        <br>Source code: <a href="https://github.com/syhpan/toolbox/tree/main/manchu">GitHub</a>
+        <br>Source code: <a href="https://github.com/syhpan/toolbox/manchu/">GitHub</a>
       </div>
     </div>
     <!-- Java script -->
     <script>
-    /* input for special characters */
+      /* input for special characters */
       function rep() {
         var input = document.getElementById("input");
         input.value = input.value.replace("x", "š");
@@ -70,7 +74,7 @@
         input.value += i;
       }
 
-    /* select sample quizzes */
+      /* select sample quizzes */
       function sample() {
         var select = document.getElementById("select");
         var n = select.value;
@@ -96,89 +100,90 @@
         /* generate quiz list in transliteration with qgen() */
         var qlist = qgen(slist, min, max, qnum);
 
-        /* generate result list in Manchu with trans() */
+        /* generate result list in Manchu script with trans() */
         var rlist = [];
         for (var i = 0; i < qlist.length; i++) {
           rlist.push(trans(qlist[i]));
         }
+
         /* send result to output */
-        var result = rlist.toString().replaceAll(',', '<br>');
-          var output = document.getElementById("output"); output.innerHTML = result;
+        //var result = rlist.toString().replaceAll(',', '<br>');
+        var result = '<div class="group">';
+        for (var i = 0; i < rlist.length; i++) {
+          result += rlist[i] + '<br>';
+          if (i % 3 == 2){
+            result += '</div><div class="group">';
+          }
         }
+        result += '</div>';
+        var output = document.getElementById("output"); output.innerHTML = result;
+      }
 
-        /* generate quiz by input preferences*/
-        function qgen(l, a, b, n) {
-          /* setting font size*/
-          var output = document.getElementById("output");
-          output.style.fontSize = "72pt";
-          if (n > 8) {
-            output.style.fontSize = "60pt";
-          }
-          if (n > 10) {
-            output.style.fontSize = "48pt";
-          }
-          if (n > 12) {
-            output.style.fontSize = "36pt";
-          }
-          if (n > 15) {
-            output.style.fontSize = "30pt";
-          }
-          if (n > 20) {
-            output.style.fontSize = "24pt";
-          }
-          if (n > 25) {
-            output.style.fontSize = "18pt";
-          }
+      /* generate quiz by input preferences*/
+      function qgen(l, a, b, n) {
+        /* set font size with setfont() */
+        setfont(n);
 
-          /* get random syllables, concatenate, then push to result list*/
-          var r = [];
-          for (var i = 0; i < n; i++) {
-            var m = Math.floor(Math.random() * (b - a + 1) + a);
-            var q = '';
-            for (var j = 0; j < m; j++) {
-              q += l[Math.floor(Math.random() * l.length)];
-            }
-            r.push(q);
+        /* get random syllables, concatenate, then push to result list*/
+        var r = [];
+        for (var i = 0; i < n; i++) {
+          var m = Math.floor(Math.random() * (b - a + 1) + a);
+          var q = '';
+          for (var j = 0; j < m; j++) {
+            q += l[Math.floor(Math.random() * l.length)];
           }
-          return r;
+          r.push(q);
         }
+        return r;
+      }
 
-        function trans(s) {
-          /* Manchu transliteration & alphabet */
-          var t = {
-            "a": "ᠠ",
-            "e": "ᡝ",
-            "i": "ᡳ",
-            "o": "ᠣ",
-            "u": "ᡠ",
-            "ū": "ᡡ",
-            "b": "ᠪ",
-            "c": "ᠴ",
-            "d": "ᡩ",
-            "f": "ᡶ",
-            "g": "ᡤ",
-            "h": "ᡥ",
-            "j": "ᠵ",
-            "k": "ᡴ",
-            "l": "ᠯ",
-            "m": "ᠮ",
-            "n": "ᠨ",
-            "p": "ᡦ",
-            "r": "ᡵ",
-            "s": "ᠰ",
-            "š": "ᡧ",
-            "t": "ᡨ",
-            "w": "ᠸ",
-            "y": "ᠶ"
+      /* set font size by number of quiz*/
+      function setfont(n) {
+        var output = document.getElementById("output");
+        /* default font size*/
+        output.style.fontSize = "72pt";
+
+        if (n > 6) {
+          output.style.fontSize = "60pt";
+        }
+        if (n > 9) {
+          output.style.fontSize = "48pt";
+        }
+        if (n > 12) {
+          output.style.fontSize = "36pt";
+        }
+        if (n > 15) {
+          output.style.fontSize = "30pt";
+        }
+        if (n > 21) {
+          output.style.fontSize = "24pt";
+        }
+        if (n > 24) {
+          output.style.fontSize = "18pt";
+        }
+      }
+
+      /* return Manchu script with transliteration*/
+      function trans(s) {
+        /* Manchu transliteration & alphabet */
+        var t = {
+          "a": "ᠠ", "e": "ᡝ", "i": "ᡳ",
+          "o": "ᠣ", "u": "ᡠ", "ū": "ᡡ",
+          "b": "ᠪ", "c": "ᠴ", "d": "ᡩ",
+          "f": "ᡶ", "g": "ᡤ", "h": "ᡥ",
+          "j": "ᠵ", "k": "ᡴ", "l": "ᠯ",
+          "m": "ᠮ", "n": "ᠨ", "p": "ᡦ",
+          "r": "ᡵ", "s": "ᠰ", "š": "ᡧ",
+          "t": "ᡨ", "w": "ᠸ", "y": "ᠶ"
           };
 
-          /*return result in Manchu*/
-          var r = '';
+        /*return result in Manchu script*/
+        var r = '';
           for (var i = 0; i < s.length; i++) {
             r += t[s[i]];
           }
           return r;
-        }
+      }
     </script>
   </body>
 </html>
