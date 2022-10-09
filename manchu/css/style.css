@@ -7,10 +7,10 @@ div#page {
   background-color: white;
   border-radius: 25px;
   margin: 0 auto;
-  padding: 5px;
+  padding: 5px 5px 30px;
   text-align: left;
-  min-height: 550px;
-  min-width: 350px;
+  min-height: 556px;
+  min-width: 348px;
   position: relative;
   display: table;
 }
@@ -27,15 +27,15 @@ div#header {
 div#menu {
   background-color: darkgray;
   color: white;
-  width: 250px;
+  width: 300px;
   float: left;
-  margin: 10px 0 10px 50px;
-  height: 400px;
+  margin: 5px 0 5px 24px;
+  height: 410px;
 }
 
 div#content {
   float: left;
-  margin: 10px 25px;
+  margin: 10px 12px;
 }
 
 div#footer {
@@ -56,4 +56,17 @@ textarea {
 
 #copyright {
   margin-top: 15px;
+}
+
+#output.group {
+  max-width:300px;
+  text-align: left;
+  display: contents;
+  margin:10px auto;
+}
+
+@media screen and (max-width: 600px){
+  #output.group {
+    display: inline-flex;
+  }
 }
