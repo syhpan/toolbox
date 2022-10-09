@@ -61,7 +61,7 @@ textarea {
 #output .group {
   max-width:300px;
   text-align: left;
-  display: block;
+  display: contents;
   margin:10px;
 }
 
