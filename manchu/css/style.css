@@ -67,7 +67,7 @@ textarea {
 
 @media screen and (max-width: 600px){
   #output .group {
-    display: block;
+    display: inline-block;
     float: left;
   }
 }
