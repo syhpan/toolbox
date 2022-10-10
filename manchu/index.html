@@ -27,21 +27,26 @@
         <!-- Menu -->
         <div id="menu">
           <p>音節數</p>
-          <p>Min: <input id="min" value="3"></input> Max: <input id="max" value="5"></input>
+          <p>
+            <label>Min: <input id="min" value="3"></input></label>
+            <label>Max: <input id="max" value="5"></input></label>
           </p>
-          <p>音節組合</p> Special char: <button onclick="add('ū');">ū</button>
-          <button onclick="add('š');">š</button>
-          <br>
-          <textarea oninput="rep();" id="input">man ju gi sun</textarea>
-          <br>
-          <p>題數： <input id="qnum" value="5"></input>
+          <p>音節組合</p>
+          <p>
+            Special char: <button onclick="add('ū');">ū</button>
+            <button onclick="add('š');">š</button>
+            <br>
+            <textarea oninput="rep();" id="input">man ju gi sun</textarea>
+            <br>
           </p>
+          <p><label>題數： <input id="qnum" value="5"></input></label>
           </p>
-          <select id="select" oninput="sample();">
-            <option value="0">選擇例題</option>
-            <option value="1">例題1</option>
-            <option value="2">例題2</option>
-          </select>
+          <p>
+            <select id="select" oninput="sample();">
+              <option value="0">選擇例題</option>
+              <option value="1">例題1</option>
+              <option value="2">例題2</option>
+            </select>
           </p>
           <button id="quiz" onclick="quiz();">出題</button>
           <br>
