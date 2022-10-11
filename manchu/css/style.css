@@ -69,10 +69,12 @@ div#output .group {
   div#page {
     width: 348px;
   }
-  div#output{
+  
+  div#output {
     margin: 5px 24px;
     width: 300px;
   }
+  
   div#output .group {
     font-size: 54pt !important;
     display: block;
