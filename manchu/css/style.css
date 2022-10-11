@@ -9,7 +9,7 @@ div#page {
   margin: 0 auto;
   padding: 5px 5px 30px;
   text-align: left;
-  min-height: 526px;
+  min-height: 556px;
   min-width: 348px;
   position: relative;
   display: table;
@@ -58,7 +58,7 @@ textarea {
   margin-top: 15px;
 }
 
-#output .group {
+div#output .group {
   max-width:300px;
   text-align: left;
   display: contents;
@@ -67,10 +67,14 @@ textarea {
 
 @media screen and (max-width: 600px){
   div#page {
-    max-width: 348px;
+    width: 348px;
   }
-
-  #output .group{
+  div#output{
+    margin: 5px 24px;
+    width: 300px;
+  }
+  div#output .group {
+    font-size: 54pt !important;
     display: block;
     float: left;
   }
