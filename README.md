@@ -2,7 +2,7 @@
 > SYHPAN's toolbox
 
 ## Recent Porjects
-- 滿文拼讀練習
+- 滿文拼讀練習 (beta)
   + [Manchu Spelling Quiz](https://syhpan.github.io/toolbox/manchu/)
 
 - 台灣南島語詞彙分級標記工具
