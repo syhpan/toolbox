@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+  <head>
+    <title>SaySiyat to IPA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./css/avenir-white.css" rel="stylesheet">
+    <style>
+      /*default style*/
+      a {
+        text-style=
+      }
+      button {
+        font-size: 12pt;
+      }
+
+      #rule {
+        display: none;
+      }
+
+      #input, #output {
+        font-size: 12pt;
+        height: auto;
+        min-height: 150px;
+        width: 350px;
+      }
+
+      #footer {
+        position: relative;
+        bottom: -10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <!-- Header -->
+      <div id="header">
+        <h1>SaySiyat to IPA</h1>
+      </div>
+      <div class="container">
+        <!-- Menu -->
+        <div id="menu">
+          <h2>Input</h2>
+          <p>
+            <input type="checkbox" onclick="phon();" id="phon" unchecked></input><label for="phon">Phonetic rules?</label>
+            <span id="rule">
+              <input type="checkbox" id="pal" unchecked></input><label for="pal">ʃi > ɕi?</label>
+              <input type="checkbox" id="longv" unchecked></input><label for="longv">VV > Vː?</label>
+            </span>
+          </p>
+          <p id="sample">Sample text: <a href="#sample" onclick="samp();">kilwa'is 加油歌</a></p>
+          <textarea oninput="rep();" id="input"></textarea>
+          <p>
+            <button id="ipa" onclick="ipa();">convert</button>
+          </p>
+        </div>
+        <!-- Content -->
+        <div id="content">
+          <h2>Output</h2>
+          <div id="output"></div>
+        </div>
+        <br>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div id="footer">
+      © 2022 Program designed by <a href="https://syhpan.github.io">Samuel Yu-hsiang Pan</a><br>
+      CSS theme by <a href="https://github.com/jasonm23/markdown-css-themes">@jasonm23</a><br>
+      Source code: <a href="https://github.com/syhpan/toolbox/">GitHub</a>
+      </div>
+    </div>
+    <!-- Java script -->
+    <script>
+      /* check if phonetic rules are needed */
+      function phon(){
+        var phon = document.getElementById("phon");
+        var rule = document.getElementById("rule");
+        if(phon.checked == true){
+          rule.style.display = "block";
+        }
+        else{
+          rule.style.display = "none";
+        }
+      }
+
+      /* sample text */
+      function samp() {
+        var input = document.getElementById("input");
+        input.value = "kilwa’is saboeh, kilwa’is saboeh,\npakakayzaehan ’ita saboeh,\n’in’itol saboeh, in’itol saboeh,\npakakayzaehan ’ita’ saboeh.";
+      }
+
+      /* input for special characters */
+      function rep() {
+        var input = document.getElementById("input");
+        input.value = input.value.replaceAll("x", "ɕ");
+        input.value = input.value.replaceAll("^", "ʰ");
+        input.value = input.value.replaceAll("\u0027", "\u02BC");
+        input.value = input.value.replaceAll("\u2019", "\u02BC");
+      }
+
+      /* main function of IPA */
+      function ipa() {
+        /* read input data */
+        var input = document.getElementById("input");
+        mystr = input.value;
+
+        /* get IPA from Roman script with trans()*/
+        var rlist = trans(mystr).split("\n");
+        var result = "";
+        for(var i = 0; i < rlist.length; i++){
+          result += rlist[i] + "<br>";
+        }
+        var output = document.getElementById("output"); output.innerHTML = result;
+      }
+
+      /* return IPA with Roman script*/
+      function trans(s) {
+        /* SaySiyat alphabet & IPA*/
+        var t = [
+            ['ae','æ'], ['oe','œ'], ['ng', 'ŋ'], ['e','ə'],
+            ['b','β'], ['r','ɻ'], ['s','θ'], ['S','ʃ'],
+            ['y','j'], ['z','ð'], ['L','ɾ'], ['c','ts'],
+            [':','ː'], ['\u02BC','ʔ']
+          ];
+
+        for (var i = 0; i < t.length; i++){
+          s = s.replaceAll(t[i][0],t[i][1]);
+        }
+
+        /* palatalization */
+        var pal = document.getElementById("pal");
+        if(pal.checked == true){
+          s = s.replaceAll("ʃi","ɕi");
+          s = s.replaceAll("tsi","tɕi");
+        }
+
+        /* long vowels */
+        var longv = document.getElementById("longv");
+        if(longv.checked == true){
+          s = s.replaceAll("aa","aː");
+          s = s.replaceAll("ee","eː");
+          s = s.replaceAll("ii","iː");
+          s = s.replaceAll("oo","oː");
+          s = s.replaceAll("uu","uː");
+        }
+
+        return s;
+      }
+    </script>
+  </body>
+</html>
