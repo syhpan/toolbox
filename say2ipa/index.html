@@ -42,6 +42,7 @@
             <span id="rule">
               <input type="checkbox" id="pal" unchecked></input><label for="pal">ʃi > ɕi?</label>
               <input type="checkbox" id="longv" unchecked></input><label for="longv">VV > Vː?</label>
+              <input type="checkbox" id="lab" unchecked></input><label for="lab">o > u /[+lab]_?</label>
             </span>
           </p>
           <p id="sample">Sample text: <a href="#sample" onclick="samp();">kilwa'is 加油歌</a></p>
@@ -118,7 +119,7 @@
         /* SaySiyat alphabet & IPA*/
         var t = [
             ['ae','æ'], ['oe','œ'], ['ng', 'ŋ'], ['e','ə'],
-            ['b','β'], ['r','ɻ'], ['s','θ'], ['S','ʃ'],
+            ['b','β'], ['r','ɻ'], ['s','θ'], ['S','ʃ'], ['j','ʑ'],
             ['y','j'], ['z','ð'], ['L','ɾ'], ['c','ts'],
             [':','ː'], ['\u02BC','ʔ']
           ];
@@ -142,6 +143,18 @@
           s = s.replaceAll("ii","iː");
           s = s.replaceAll("oo","oː");
           s = s.replaceAll("uu","uː");
+          s = s.replaceAll("ææ","æː");
+          s = s.replaceAll("œœ","œː");
+          s = s.replaceAll("əə","əː");
+        }
+
+        /* u with labial */
+        var lab = document.getElementById("lab");
+        if(lab.checked == true){
+          s = s.replaceAll("po","pu");
+          s = s.replaceAll("bo","bu");
+          s = s.replaceAll("βo","βu");
+          s = s.replaceAll("mo","mu");
         }
 
         return s;
