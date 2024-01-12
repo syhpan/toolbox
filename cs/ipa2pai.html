@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-tw"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>IPA to Paiwan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./css/avenir-white.css" rel="stylesheet">
+    <style>
+      /*default style*/
+      button {
+        font-size: 12pt;
+      }
+
+      #rule {
+        display: none;
+      }
+
+      #input, #output {
+        font-size: 12pt;
+        height: auto;
+        min-height: 150px;
+        width: 350px;
+      }
+
+      #footer {
+        position: relative;
+        bottom: -10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <!-- Header -->
+      <div id="header">
+        <h1>IPA to Paiwan</h1>
+      </div>
+      <div class="container">
+        <!-- Menu -->
+        <div id="menu">
+          <h2>Input</h2>
+          <p>
+            <input type="checkbox" onclick="phon();" id="phon" unchecked=""><label for="phon">Other rules?</label>
+            <span id="rule">
+              <input type="checkbox" id="nosym" unchecked=""><label for="nosym">No Symbol?</label>
+              <input type="checkbox" id="nolo" unchecked=""><label for="nolo">No Lowering?</label>
+              <input type="checkbox" id="noq" unchecked=""><label for="noq">No Q?</label>
+            </span>
+          </p>
+          <!--p id="sample">Sample text: <a href="https://syhpan.github.io/toolbox/say2ipa/#sample" onclick="samp();">kilwa'is 加油歌</a></p-->
+          <textarea oninput="rep();" id="input"></textarea>
+          <p>
+            <button id="ipa" onclick="ipa();">convert</button>
+          </p>
+        </div>
+        <!-- Content -->
+        <div id="content">
+          <h2>Output</h2>
+          <div id="output"></div>
+        </div>
+        <br>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div id="footer">
+      © 2024 Program designed by <a href="https://syhpan.github.io/">Samuel Yu-hsiang Pan</a><br>
+      CSS theme by <a href="https://github.com/jasonm23/markdown-css-themes">@jasonm23</a><br>
+      Source code: <a href="https://github.com/syhpan/toolbox/">GitHub</a>
+    </div>
+    <!-- Java script -->
+    <script>
+      /* check if phonetic rules are needed */
+      function phon(){
+        var phon = document.getElementById("phon");
+        var rule = document.getElementById("rule");
+        if(phon.checked == true){
+          rule.style.display = "block";
+        }
+        else{
+          rule.style.display = "none";
+          var nosym = document.getElementById("nosym");
+          var nolo = document.getElementById("nolo");
+          var noq = document.getElementById("noq");
+          nosym.checked = false;
+          nolo.checked = false;
+          noq.checked = false;
+        }
+      }
+
+      /* sample text */
+      function samp() {
+        var input = document.getElementById("input");
+        input.value = "kilwa’is saboeh, kilwa’is saboeh,\npakakayzaehan ’ita saboeh,\n’in’itol saboeh, in’itol saboeh,\npakakayzaehan ’ita’ saboeh.";
+        rep();
+      }
+
+      /* input for special characters */
+      function rep() {
+        var input = document.getElementById("input");
+        input.value = input.value.replaceAll("̩", "");
+        input.value = input.value.replaceAll("͡", "");
+        input.value = input.value.replaceAll("ˈ", "");
+        input.value = input.value.replaceAll("ʰ", "");
+        input.value = input.value.replaceAll("ɑ", "a");
+        input.value = input.value.replaceAll("ɡ", "g");
+        input.value = input.value.replaceAll("<", "-");
+        input.value = input.value.replaceAll(">", "-");
+        input.value = input.value.replaceAll("\u0027", "\u02BC");
+        input.value = input.value.replaceAll("\u2019", "\u02BC");
+      }
+
+      /* main function of IPA */
+      function ipa() {
+        /* read input data */
+        var input = document.getElementById("input");
+        mystr = input.value;
+
+        /* get IPA from Roman script with trans()*/
+        var rlist = trans(mystr).split("\n");
+        var result = "";
+        for(var i = 0; i < rlist.length; i++){
+          result += rlist[i] + "<br>";
+        }
+        var output = document.getElementById("output"); output.innerHTML = result;
+      }
+
+      /* return IPA with Roman script*/
+      function trans(s) {
+        /* IPA & Paiwan Alphabet*/
+        var t = [
+            ['IPA','Paiwan'], ['音標','排灣'],
+            ['ə','e'], ['ŋ','ng'],
+            ['ɾ','r'], ['ɹ','r'], ['ɻ','r'], ['ɭ','l'],
+            ['ʈ','tr'], ['ɖ','dr'],
+            ['tj','tʲ'], ['dj','dʲ'], ['lj','lʲ'], ['c','tʲ'], ['ɟ','dʲ'], ['ʎ','lʲ'],
+            ['j','y'], ['ʲ','j'],
+            ['ʑ','z'], ['ʐ','z'], ['ʣ','z'], ['ʥ','z'], ['dz','z'],
+            ['ɕ', 's'], ['ts','c'], ['ʦ','c'], ['ʨ','c'],
+            ['ː',':'], ['ʔ','\u02BC'], ['ʡ','\u02BC']
+          ];
+
+        for (var i = 0; i < t.length; i++){
+          s = s.replaceAll(t[i][0],t[i][1]);
+        }
+
+        /* no symbol */
+        var nosym = document.getElementById("nosym");
+        if(nosym.checked == true){
+          s = s.replaceAll(".", "");
+          s = s.replaceAll("!", "");
+          s = s.replaceAll("-", "");
+          s = s.replaceAll("~", "");
+          s = s.replaceAll("(", "");
+          s = s.replaceAll(")", "");
+          s = s.replaceAll("<", "");
+          s = s.replaceAll(">", "");
+          s = s.replaceAll("=", " ");
+        }
+
+        /* no lowering */
+        var nolo = document.getElementById("nolo");
+        if(nolo.checked == true){
+          s = s.replaceAll("o", "u");
+        }
+        
+        /* no Q */
+        var noq = document.getElementById("noq");
+        if(noq.checked == true){
+          s = s.replaceAll("q", "\u02BC");
+        }
+        copy(s);
+
+        return s;
+      }
+
+      function copy(s) {
+        var mycopy = s;
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(String(mycopy));
+        alert("已複製輸出結果：\n" + mycopy);
+      }
+
+    </script>
+  
+
+</body></html>
