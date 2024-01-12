@@ -1,6 +1,6 @@
 # Convert String
-- [SaySiyat to IPA](https://syhpan.github.io/toolbox/cs/say2ipa.thml)
-- [IPA to Paiwan](https://syhpan.github.io/toolbox/cs/ipa2pai.thml)
+- [SaySiyat to IPA](https://syhpan.github.io/toolbox/cs/say2ipa.html)
+- [IPA to Paiwan](https://syhpan.github.io/toolbox/cs/ipa2pai.html)
 
 ## 使用說明
 
